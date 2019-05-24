@@ -27,7 +27,7 @@
 
 
 import pygame
-
+import pygame.midi
 import serial, time 
 
 
@@ -39,9 +39,18 @@ arduino = serial.Serial( '/dev/ttyACM0', 115200 )
 #give the connection a second to settle
 
 time.sleep(1) 
-
 pygame.init()
 
+pygame.midi.init()
+
+print pygame.midi.get_default_output_id()
+print pygame.midi.get_device_info(0)
+
+player1 = pygame.midi.Output(0)
+
+player1.set_instrument(0)
+
+print 'Setup alsa server...'
 
 
 display_width = 600
@@ -52,7 +61,7 @@ display_height = 400
 
 gameDisplay = pygame.display.set_mode( (display_width, display_height) )
 
-pygame.display.set_caption('----- Conga -----')
+pygame.display.set_caption('----- CongAr -----')
 
 
 
@@ -60,17 +69,10 @@ black = (0,0,0)
 
 white = (255,255,255)
 
+clock = pygame.time.Clock()
 
 
 clock = pygame.time.Clock()
-
-congAr_1_1_close = pygame.mixer.Sound("congAr_1_1_close.ogg")
-
-congAr_2_1_close = pygame.mixer.Sound("congAr_2_1_close.ogg")
-
-congAr_1_2_open = pygame.mixer.Sound("congAr_1_2_open.ogg")
-
-congAr_2_2_open = pygame.mixer.Sound("congAr_2_2_open.ogg")
 
 
 
@@ -153,67 +155,59 @@ def loop():
 		if sensors_dt[0] >= 10.0 and sensors_dt[0] <= 20.0 and sensors_dt[1] < 5.0 :
 			print("Sensor maior 1")
 			maoD2(x,y)
-			congAr_1_2_open.play()   
 			pygame.display.update()
-			time.sleep(1)
-
+			player1.note_on(60,127,1)   
+			player1.note_off(60,127,1)
 
 		if sensors_dt[0] >= 5.0 and sensors_dt[0] <= 9.0 and sensors_dt[1] < 5.0:
 			print("Sensor menor 1")
 			maoD(x,y)
-			congAr_1_1_close.play()   
+			player1.note_on(61,127,1)    
 			pygame.display.update()
-			time.sleep(1)
-
+			player1.note_off(61,127,1)
+		
 
 		if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[0] < 5.0:
 			print("Sensor maior 2 audio")
 			maoE2(x,y)
-			congAr_1_2_open.play() 
+			player1.note_on(62,127,1)  
 			pygame.display.update()  
-			time.sleep(1)
-		
+			player1.note_off(62,127,1)
 
 		if sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0 and sensors_dt[0] < 5.0 :
 			print("Sensor menor 2")
 			maoE(x,y)
-			congAr_2_1_close.play()
+			player1.note_on(63,127,1) 
 			pygame.display.update()   
-			time.sleep(1)
+			player1.note_off(63,127,1)
 
 		if sensors_dt[0] >= 10.0 and sensors_dt[0] <= 20.0 and sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 :
 			print("Sensor maior 1 + Sensor maior 2")
 			maos(x,y)	
-			congAr_1_2_open.play()
-			congAr_1_2_open.play()
+			player1.note_on(64,127,1) 
 			pygame.display.update()   
-			time.sleep(1)
+			player1.note_off(64,127,1)
 
 		if sensors_dt[0] >= 5.0 and sensors_dt[0] <= 9.0 and sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0:
 			print("Sensor menor 1 + Sensor menor 2")
 			maos2(x,y)
-			congAr_1_1_close.play()
-			congAr_2_1_close.play()	
+			player1.note_on(65,127,1) 	
 			pygame.display.update()   
-			time.sleep(1)
+			player1.note_off(65,127,1)
 
 		if sensors_dt[0] >= 5.0 and sensors_dt[0] <= 9.0 and sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0:
 			print("Sensor menor 1 + Sensor maior 2")
 			maosalt(x,y)
-			congAr_1_1_close.play()
-			congAr_1_2_open.play()	
+			player1.note_on(66,127,1) 	
 			pygame.display.update()   
-			time.sleep(1)
+			player1.note_off(66,127,1)
 
 		if sensors_dt[0] >= 10.0 and sensors_dt[0] <= 20.0 and sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0:
 			print("Sensor maior 1 + Sensor menor 2")
 			maosalt2(x,y)
-			congAr_1_2_open.play()
-			congAr_2_1_close.play()                    	
+			player1.note_on(67,127,1)                     	
 			pygame.display.update()   
-			time.sleep(1)
-
-		
+			player1.note_off(67,127,1)
 		
 		crashed = False
 		
