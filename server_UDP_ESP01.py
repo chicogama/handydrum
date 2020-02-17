@@ -107,7 +107,7 @@ def server_socket():
         sensors_dt = map(float, sensors_dt.split(' '))
         print(sensors_dt[0], sensors_dt[1], sensors_dt[2])
 
-               if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0:
+        if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0:
             maoD2(x, y)
             print("Sensor maior 1")
             player1.note_on(60, 127, 1)
@@ -162,8 +162,6 @@ def server_socket():
             player1.note_on(67, 127, 1)
             player1.note_off(67, 127, 1)
             pygame.display.update()
-        #funcao de coleta de dados
-        #play_midi( msg)
 
         white = (y % 255, 255, x % 255)  #atualiza de cor de fundo
 
