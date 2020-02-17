@@ -10,8 +10,8 @@ const char* ssid = "ERROR";
 const char* password =  "sword@7991";
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEF };
 const IPAddress remote_ip(192, 168, 1, 102);
-Ultrasonic ultrasonic1(D1, D2);
-Ultrasonic ultrasonic2(D6, D5);
+Ultrasonic ultrasonic1(D6, D5);
+Ultrasonic ultrasonic2(D1, D2);
 
 //Inicializando MQTT
 void subscribeReceive(char* topic, byte* payload, unsigned int length);
