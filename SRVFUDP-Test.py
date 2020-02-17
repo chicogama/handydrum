@@ -22,9 +22,6 @@ pygame.midi.init()
 print(pygame.midi.get_default_output_id())
 print(pygame.midi.get_device_info(0))
 
-player1 = pygame.midi.Output(0)
-player1.set_instrument(0)
-
 print('Setup alsa server...')
 
 display_width = 600
@@ -99,76 +96,81 @@ def server_socket():
     while True:
         msg, cliente = udp.recvfrom(1024)
         print(cliente)
-
         data = msg
         sensors_dt = data
 
         # array que retira os 'espacos' da variavel 'data'
         sensors_dt = map(float, sensors_dt.split(' '))
-        print(sensors_dt[0], sensors_dt[1], sensors_dt[2])
+        id = str(sensors_dt[0])
+        player = ("player" + id)
+        print(id, player, sensors_dt[1], sensors_dt[2])
+
+        player = pygame.midi.Output(2)
+        player.set_instrument(0)
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] > 20.0:
             maoD2(x, y)
             print("Sensor maior 1")
-            player1.note_on(60, 127, 1)
-            player1.note_off(60, 127, 1)
+
+            player.note_on(60, 127, 1)
+            player.note_off(60, 127, 1)
             pygame.display.update()
 
         if sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0 and sensors_dt[
                 2] > 20.0:
             maoD(x, y)
             print("Sensor menor 1")
-            player1.note_on(61, 127, 1)
-            player1.note_off(61, 127, 1)
+            player.note_on(61, 127, 1)
+            player.note_off(61, 127, 1)
             pygame.display.update()
 
         if sensors_dt[2] >= 10.0 and sensors_dt[2] <= 20.0 and sensors_dt[
                 1] > 20.0:
             maoE2(x, y)
             print("Sensor maior 2 audio")
-            player1.note_on(62, 127, 1)
-            player1.note_off(62, 127, 1)
+            player.note_on(62, 127, 1)
+            player.note_off(62, 127, 1)
             pygame.display.update()
 
         if sensors_dt[2] >= 5.0 and sensors_dt[2] <= 9.0 and sensors_dt[
                 1] > 20.0:
             maoE(x, y)
             print("Sensor menor 2")
-            player1.note_on(63, 127, 1)
-            player1.note_off(63, 127, 1)
+            player.note_on(63, 127, 1)
+            player.note_off(63, 127, 1)
             pygame.display.update()
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] >= 10.0 and sensors_dt[2] <= 20.0:
             maos(x, y)
             print("Sensor maior 1 + Sensor maior 2")
-            player1.note_on(64, 127, 1)
-            player1.note_off(64, 127, 1)
+            player.note_on(64, 127, 1)
+            player.note_off(64, 127, 1)
             pygame.display.update()
 
         if sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0 and sensors_dt[
                 2] >= 5.0 and sensors_dt[2] <= 9.0:
             maos2(x, y)
             print("Sensor menor 1 + Sensor menor 2")
-            player1.note_on(65, 127, 1)
-            player1.note_off(65, 127, 1)
+            player.note_on(65, 127, 1)
+            player.note_off(65, 127, 1)
             pygame.display.update()
 
         if sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0 and sensors_dt[
                 2] >= 10.0 and sensors_dt[2] <= 20.0:
             maosalt(x, y)
             print("Sensor menor 1 + Sensor maior 2")
-            player1.note_on(66, 127, 1)
-            player1.note_off(66, 127, 1)
+            player.note_on(66, 127, 1)
+            player.note_off(66, 127, 1)
             pygame.display.update()
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] >= 5.0 and sensors_dt[2] <= 9.0:
             maosalt2(x, y)
             print("Sensor maior 1 + Sensor menor 2")
-            player1.note_on(67, 127, 1)
-            player1.note_off(67, 127, 1)
+            player.note_on(67, 127, 1)
+            player.note_off(67, 127, 1)
             pygame.display.update()
 
         white = (y % 255, 255, x % 255)  #atualiza de cor de fundo
