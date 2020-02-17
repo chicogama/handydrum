@@ -7,7 +7,7 @@
 # mqtt
 # thread python
 # aconnect
-# modprobe
+# modprobe - sudo modprobe snd-virmidi snd_index=1
 
 import socket
 import pygame
@@ -105,7 +105,7 @@ def server_socket():
         player = ("player" + id)
         print(id, player, sensors_dt[1], sensors_dt[2])
 
-        player = pygame.midi.Output(2)
+        player = pygame.midi.Output(0)
         player.set_instrument(0)
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
