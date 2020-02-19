@@ -103,7 +103,7 @@ def on_message(client, userdata, msg):
 
         # array que retira os 'espacos' da variavel 'data'
         sensors_dt = map(float, sensors_dt.split(' '))
-        id = int(sensors_dt[0] + 1)
+        id = int(sensors_dt[0] + 3)
         print(id, sensors_dt[1], sensors_dt[2])
         player1 = pygame.midi.Output(id)
         player1.set_instrument(0)
