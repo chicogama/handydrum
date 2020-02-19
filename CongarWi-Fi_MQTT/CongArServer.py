@@ -21,6 +21,6 @@ client.on_message = on_message
 # Seta um usuário e senha para o Broker, se não tem, não use esta linha
 #client.username_pw_set("USUARIO", password="SENHA")
 # Conecta no MQTT Broker, no meu caso, o Mosquitto
-client.connect("test.mosquitto.org", 1883, 60)
+client.connect("mqtt.eclipse.org", 1883, 60)
 # Inicia o loop
 client.loop_forever()

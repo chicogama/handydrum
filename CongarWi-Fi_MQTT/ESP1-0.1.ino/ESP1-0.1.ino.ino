@@ -16,7 +16,7 @@ Ultrasonic ultrasonic2(D1, D2);
 
 //Inicializando MQTT
 void subscribeReceive(char* topic, byte* payload, unsigned int length);
-const char* server = "test.mosquitto.org";
+const char* server = "mqtt.eclipse.org";
 
 //Variáveis pra manipulação dos dados
 char dis1[6];
@@ -104,7 +104,7 @@ void loop() {
   temphumi = "1 "+temp+" "+humi;
   temphumi.toCharArray(buf, 15);
  
-  // Ensure that we are subscribed to the topic "MakerIOTopic"
+  // Subsrevendo no Topico
   mqttClient.subscribe("tempmonitor");
    if(mqttClient.publish("tempmonitor", buf))
   {

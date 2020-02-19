@@ -15,7 +15,7 @@ Ultrasonic ultrasonic2(D1, D2);
 
 //Inicializando MQTT
 void subscribeReceive(char* topic, byte* payload, unsigned int length);
-const char* server = "test.mosquitto.org";
+const char* server = "mqtt.eclipse.org";
 
 //Variáveis pra manipulação dos dados
 char dis1[6];

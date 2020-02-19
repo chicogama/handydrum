@@ -22,9 +22,6 @@ pygame.midi.init()
 print(pygame.midi.get_default_output_id())
 print(pygame.midi.get_device_info(0))
 
-player1 = pygame.midi.Output(0)
-player1.set_instrument(0)
-
 print('Setup alsa server...')
 
 display_width = 600
@@ -104,8 +101,10 @@ def server_socket():
 
         # array que retira os 'espacos' da variavel 'data'
         sensors_dt = map(float, sensors_dt.split(' '))
-        id = int(sensors_dt[0])
+        id = int(sensors_dt[0] + 1)
         print(id, sensors_dt[1], sensors_dt[2])
+        player1 = pygame.midi.Output(id)
+        player1.set_instrument(0)
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] > 20.0:
