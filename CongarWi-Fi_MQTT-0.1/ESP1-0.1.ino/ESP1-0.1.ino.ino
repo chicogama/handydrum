@@ -76,7 +76,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-    delay(500);
+    delay(300);
   digitalWrite(LED_BUILTIN, LOW);
 
   // enviar dados sensor
