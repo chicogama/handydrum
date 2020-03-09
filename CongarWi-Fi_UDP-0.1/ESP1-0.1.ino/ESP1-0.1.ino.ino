@@ -7,10 +7,10 @@
 #include <PubSubClient.h>
 
 // rede, senha, ipservidor
-const char* ssid = "ERROR";
-const char* password =  "sword@7991";
+const char* ssid = "LABRTL-22426";
+const char* password =  "7gPBsaUF";
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-const IPAddress remote_ip(192, 168, 1, 102);
+const IPAddress remote_ip(10, 42, 0, 170);
 Ultrasonic ultrasonic1(D1, D2);
 Ultrasonic ultrasonic2(D6, D5);
 

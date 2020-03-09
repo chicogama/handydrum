@@ -12,7 +12,8 @@
 import socket
 import pygame
 import pygame.midi
-import serial, time
+import serial
+import time
 
 time.sleep(1)
 pygame.init()
@@ -87,7 +88,7 @@ def server_socket():
     x = (display_width * 0.30)
     y = (display_height * 0.45)
 
-    HOST = '192.168.1.102'  # Endereco IP do Servidor
+    HOST = '10.42.0.170'  # Endereco IP do Servidor
     PORT = 5050  # Porta que o Servidor esta
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     orig = (HOST, PORT)
@@ -103,7 +104,7 @@ def server_socket():
         sensors_dt = map(float, sensors_dt.split(' '))
         id = int(sensors_dt[0] + 1)
         print(id, sensors_dt[1], sensors_dt[2])
-        player1 = pygame.midi.Output(id)
+        player1 = pygame.midi.Output(0)
         player1.set_instrument(0)
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
@@ -170,7 +171,7 @@ def server_socket():
             player1.note_off(67, 127, 1)
             pygame.display.update()
 
-        white = (y % 255, 255, x % 255)  #atualiza de cor de fundo
+        white = (y % 255, 255, x % 255)  # atualiza de cor de fundo
 
         gameDisplay.fill(white)
 
