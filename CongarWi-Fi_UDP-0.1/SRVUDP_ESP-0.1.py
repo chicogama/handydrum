@@ -14,6 +14,8 @@ import pygame
 import pygame.midi
 import serial
 import time
+from random import seed
+from random import randint
 
 time.sleep(1)
 pygame.init()
@@ -22,7 +24,7 @@ pygame.midi.init()
 
 print(pygame.midi.get_default_output_id())
 print(pygame.midi.get_device_info(0))
-player1 = pygame.midi.Output(0)
+player1 = pygame.midi.Output(2)
 
 print('Setup alsa server...')
 
@@ -89,13 +91,14 @@ def server_socket():
     x = (display_width * 0.30)
     y = (display_height * 0.45)
 
-    HOST = '192.168.0.8'  # Endereco IP do Servidor
+    HOST = '192.168.1.102'  # Endereco IP do Servidor
     PORT = 5050  # Porta que o Servidor esta
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     orig = (HOST, PORT)
     udp.bind(orig)
 
     while True:
+        start = time.time()
         msg, cliente = udp.recvfrom(1024)
         print(cliente)
         data = msg
@@ -107,20 +110,23 @@ def server_socket():
         # player1 = pygame.midi.Output(2)
         # player1.set_instrument(0)
         print(id, sensors_dt[1], sensors_dt[2])
-        track = int(sensors_dt[0])
+        track = randint(0, 1)
         duracao = 0.250
-
+        end = time.time()
+        elapsed = end - start
+        print(elapsed)
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] > 20.0:
             maoD2(x, y)
             print("Sensor maior 1")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*10
             vol2 = round(vol, 5)/1000
             player1.note_on(60, vol, 1)
             player1.note_off(60, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n') 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
             arquivoGrava.close()
             pygame.display.update()
 
@@ -128,91 +134,98 @@ def server_socket():
                 2] > 20.0:
             maoD(x, y)
             print("Sensor menor 1")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*20
             vol2 = round(vol, 5)/1000
             player1.note_on(61, vol, 1)
             player1.note_off(61, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n') 
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         if sensors_dt[2] >= 10.0 and sensors_dt[2] <= 20.0 and sensors_dt[
                 1] > 20.0:
             maoE2(x, y)
             print("Sensor maior 2 audio")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*10
             vol2 = round(vol, 5)/1000
             player1.note_on(62, vol, 1)
             player1.note_off(62, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n')  
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         if sensors_dt[2] >= 5.0 and sensors_dt[2] <= 9.0 and sensors_dt[
                 1] > 20.0:
             maoE(x, y)
             print("Sensor menor 2")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*20
             vol2 = round(vol, 5)/1000
             player1.note_on(63, vol, 1)
             player1.note_off(63, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n')  
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] >= 10.0 and sensors_dt[2] <= 20.0:
             maos(x, y)
             print("Sensor maior 1 + Sensor maior 2")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*10
             vol2 = round(vol, 5)/1000
             player1.note_on(64, vol, 1)
             player1.note_off(64, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n') 
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         if sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0 and sensors_dt[
                 2] >= 5.0 and sensors_dt[2] <= 9.0:
             maos2(x, y)
             print("Sensor menor 1 + Sensor menor 2")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*20
             vol2 = round(vol, 5)/1000
             player1.note_on(65, vol, 1)
             player1.note_off(65, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n')  
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         if sensors_dt[1] >= 5.0 and sensors_dt[1] <= 9.0 and sensors_dt[
                 2] >= 10.0 and sensors_dt[2] <= 20.0:
             maosalt(x, y)
             print("Sensor menor 1 + Sensor maior 2")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*10
             vol2 = round(vol, 5)/1000
             player1.note_on(66, vol, 1)
             player1.note_off(66, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n') 
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         if sensors_dt[1] >= 10.0 and sensors_dt[1] <= 20.0 and sensors_dt[
                 2] >= 5.0 and sensors_dt[2] <= 9.0:
             maosalt2(x, y)
             print("Sensor maior 1 + Sensor menor 2")
-            arquivoGrava = open('out1.txt', 'a')
+            arquivoGrava = open('out.txt', 'a')
             vol = 2*int(sensors_dt[1])*10
             vol2 = round(vol, 5)/1000
             player1.note_on(67, vol, 1)
             player1.note_off(67, vol, 1)
-            arquivoGrava.writelines(str(track)+ " "+ "61"+" "+ str(duracao)+" "+ str(vol2)+'\n') 
-            arquivoGrava.close() 
+            arquivoGrava.writelines(
+                str(track) + " " + "61"+" " + str(duracao)+" " + str(vol2)+'\n')
+            arquivoGrava.close()
             pygame.display.update()
 
         white = (y % 255, 255, x % 255)  # atualiza de cor de fundo

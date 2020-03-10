@@ -7,10 +7,10 @@
 #include <PubSubClient.h>
 
 // rede, senha, ipservidor
-const char* ssid = "seinfap-externo2";
-const char* password =  "#parceria123";
+const char* ssid = "ERROR";
+const char* password =  "sword@7991";
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-const IPAddress remote_ip(192, 168, 0, 8);
+const IPAddress remote_ip(192, 168, 1, 102);
 Ultrasonic ultrasonic1(D1, D2);
 Ultrasonic ultrasonic2(D6, D5);
 
@@ -76,7 +76,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-    delay(300);
+    delay(500);
   digitalWrite(LED_BUILTIN, LOW);
 
   // enviar dados sensor
@@ -118,7 +118,7 @@ void loop() {
   }
  
   // Dont overload the server!
-  delay(300);
+  delay(500);
 }
 void subscribeReceive(char* topic, byte* payload, unsigned int length)
 {
